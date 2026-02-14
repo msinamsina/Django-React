@@ -1,3 +1,10 @@
 {
-    "image": "mcr.microsoft.com/devcontainers/universal:5.1.4-noble"
+    "image": "mcr.microsoft.com/devcontainers/universal:5.1.4-noble",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "dsznajder.es7-react-js-snippets"
+            ]
+        }
+    }
 }
