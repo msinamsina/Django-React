@@ -1,13 +1,23 @@
-import {React, useState} from "react"
+import {React, useState, useEffect} from "react"
 import { Col, Container, Row, Form, Button } from "react-bootstrap"
 import { Link } from 'react-router-dom'
+import {checkPasswordComplexity} from "../../utilities/checkPassword"
+import { checkEmail } from "../../utilities/checkEmail"
 
 function RegisterPage() {
     const [username, setUsername ] = useState("")
     const [email, setEmail ] = useState("")
     const [password, setPassword ] = useState("")
     const [confirmPassword, setConfirmPassword ] = useState("")
-    var isFormValid = username && email && password && (password === confirmPassword)
+    const [passwordError, setPasswordError] = useState("")
+    var isFormValid = (username && email && password && 
+                       (password === confirmPassword) &&
+                       checkEmail(email));
+
+    useEffect(() => {
+        const error = checkPasswordComplexity(password, confirmPassword);
+        setPasswordError(error);
+    }, [password, confirmPassword]);
     return (
     <Container className="mt-5">
         <Row className="justify-content-center">
@@ -37,6 +47,13 @@ function RegisterPage() {
                         <Form.Label>Confirm Password</Form.Label>
                         <Form.Control type="password" placeholder="Confirm Password" 
                         value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+                        {password && confirmPassword && passwordError && passwordError.length > 0 && (
+                                <Form.Text className="text-danger">
+                                    {passwordError.map((error, index) => (
+                                        <div key={index}>{error}</div>
+                                    ))}
+                                </Form.Text>
+                            )}
                     </Form.Group>
                     <Button variant="primary" type="submit" className="w-50" disabled={!isFormValid}>
                         Sign up
