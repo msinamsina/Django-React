@@ -62,9 +62,20 @@ test('renders the app without crashing', async () => {
 
   userEvent.type(nameInputElement, 'testuser');
   userEvent.type(emailRegisterInputElement, 'testuser@example.com');
-  userEvent.type(passwordRegisterInputElement, 'password123');
-  userEvent.type(confirmPasswordInputElement, 'password123');
+  userEvent.type(passwordRegisterInputElement, 'Password@123');
+  userEvent.type(confirmPasswordInputElement, 'Password@123');
 
   expect(registerSubmitButtonElement).toBeEnabled();
+
+  userEvent.click(registerSubmitButtonElement);
+
+
+  
+  const successMessageElement = await screen.findByRole('heading', {name: /verification email sent/i});
+  expect(successMessageElement).toBeInTheDocument();
+
+
+  expect(screen.getByText(/a verification email has been sent to your email address/i)).toBeInTheDocument();
+  expect(screen.getByText(/please check your inbox and click the link to verify your account/i)).toBeInTheDocument();
 
 });
