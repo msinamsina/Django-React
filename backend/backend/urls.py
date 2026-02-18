@@ -19,5 +19,12 @@ from django.contrib import admin
 from django.urls import path
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+
 ]
+
+
+if os.environ.get("DJANGO_ADMIN_ENABLED", "False") == "True":
+    print("Admin interface enabled")
+    urlpatterns.insert(0, path("admin/", admin.site.urls))
+else:
+    print("Admin interface disabled")
