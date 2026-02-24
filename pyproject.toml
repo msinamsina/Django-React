@@ -10,3 +10,22 @@ dependencies = [
     "djangorestframework-simplejwt>=5.5.1",
     "dotenv>=0.9.9",
 ]
+
+[dependency-groups]
+dev = [
+    "black>=26.1.0",
+    "flake8>=7.3.0",
+    "isort>=8.0.0",
+]
+
+[tool.ruff]
+line-length = 120
+select = ["E", "F", "W", "C90"]
+ignore = ["E501"]
+exclude = ["migrations", "venv", "env", "__pycache__"]
+
+
+[tool.flake8]
+max-line-length = 120
+ignore = E501
+exclude = migrations,venv,env,__pycache__
